@@ -1,9 +1,8 @@
-import {ICrudInterface} from "./crudInterface.interface";
 import {APIRequestContext, APIResponse} from "@playwright/test";
 import {Methods} from "../enums/methods";
 
-export class RequestAPI implements ICrudInterface {
-    constructor(private readonly requestApi: APIRequestContext ) {
+export class RequestAPI {
+    constructor(private readonly requestApi: APIRequestContext) {
     }
 
     async request<T>(method: Methods, endpoint: string, options?: any): Promise<APIResponse> {

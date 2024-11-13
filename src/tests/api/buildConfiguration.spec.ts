@@ -1,6 +1,7 @@
 import {expect, test} from "@src/fixtures/api.fixture";
 import {allure} from "allure-playwright";
 import {Methods} from "../../api/enums/methods";
+import {Endpoints} from "../../api/enums/endpoints";
 
 
 
@@ -10,7 +11,7 @@ test.describe('Api test', async () => {
        await allure.suite('Regression');
        await allure.label('Positive', 'CRUD');
 
-       const response = await api.request(Methods.GET, 'app/rest/projects/');
+       const response = await api.request(Methods.GET, Endpoints.PROJECTS);
        expect(response.status()).toEqual(200);
    });
 
