@@ -1,19 +1,25 @@
 import {APIRequestContext, APIResponse} from "@playwright/test";
 import {Methods} from "../enums/methods";
+import {getPropertiesConfig} from "../../config/config";
+
 
 export class RequestAPI {
-    constructor(private readonly requestApi: APIRequestContext) {
+    constructor(protected readonly requestApi: APIRequestContext) {
     }
 
-    async request<T>(method: Methods, endpoint: string, options?: any): Promise<APIResponse> {
-        return this.requestApi[method](
-            `http://${process.env.USERNAME}:${process.env.PASSWORD}@0.0.0.0:8111/` + endpoint,
-            {
-                headers: {
-                    Accept: "application/json"
-                },
-                ...options
-            }
-        );
+    async request(method: Methods, endpoint: string, options?: any): Promise<APIResponse> {
+        try {
+            return this.requestApi[method](
+                `http://${getPropertiesConfig('USERNAME')}:${getPropertiesConfig('PASSWORD')}@0.0.0.0:8111/` + endpoint,
+                {
+                    headers: {
+                        Accept: "application/json"
+                    },
+                    ...options
+                }
+            );
+        } catch (e) {
+            throw new Error(`Error =>, ${e.message}`);
+        }
     }
 }

@@ -3,35 +3,35 @@ import {ICrudInterface} from "./crudInterface.interface";
 import {APIRequestContext, APIResponse, expect} from "@playwright/test";
 import {UncheckedBase} from "./UncheckedBase";
 
-export class CheckedBase<T> extends RequestAPI implements ICrudInterface {
+export class CheckedBase extends RequestAPI implements ICrudInterface {
     private uncheckedBase: UncheckedBase;
 
-    constructor(requestApi: APIRequestContext, endpoint: string) {
+    constructor(protected readonly requestApi: APIRequestContext) {
         super(requestApi);
-        this.uncheckedBase = new UncheckedBase(requestApi, endpoint);
+        this.uncheckedBase = new UncheckedBase(requestApi);
     }
 
-    async create<T>(model: any): Promise<APIResponse> {
-        const response = await this.uncheckedBase.create(model);
+    async create(endpoint: string, model: any): Promise<APIResponse> {
+        const response = await this.uncheckedBase.create(endpoint, model);
         expect(response.status()).toEqual(200);
-        return response.json();
+        return response;
     }
 
-    async delete<T>(id: string): Promise<APIResponse> {
-        const response = await this.uncheckedBase.delete(id);
+    async delete(endpoint: string, id: string): Promise<APIResponse> {
+        const response = await this.uncheckedBase.delete(endpoint, id);
         expect(response.status()).toEqual(200);
-        return response.json();
+        return response;
     }
 
-    async read<T>(id: string): Promise<APIResponse> {
-        const response = await this.uncheckedBase.read(id);
+    async read(endpoint: string, id: string = ''): Promise<APIResponse> {
+        const response = await this.uncheckedBase.read(endpoint, id);
         expect(response.status()).toEqual(200);
-        return response.json();
+        return response;
     }
 
-    async update<T>(id: string, model: any): Promise<APIResponse> {
-        const response = await this.uncheckedBase.update(id, model);
+    async update(endpoint: string, id: string, model?: any): Promise<APIResponse> {
+        const response = await this.uncheckedBase.update(endpoint, id, model);
         expect(response.status()).toEqual(200);
-        return response.json();
+        return response;
     }
 }

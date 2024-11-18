@@ -4,26 +4,23 @@ import {Methods} from "../enums/methods";
 import {ICrudInterface} from "./crudInterface.interface";
 
 export class UncheckedBase extends RequestAPI implements ICrudInterface {
-    readonly endpoint: string;
-
-    constructor(requestApi: APIRequestContext, endpoint: string) {
+    constructor(requestApi: APIRequestContext) {
         super(requestApi);
-        this.endpoint = endpoint;
     }
     
-    async create(model: any): Promise<APIResponse> {
-        return this.request(Methods.POST, this.endpoint, model);
+    async create(endpoint: string, model?: any): Promise<APIResponse> {
+        return this.request(Methods.POST, endpoint, model);
     }
 
-    async read(id: string): Promise<APIResponse> {
-        return this.request(Methods.GET, `${this.endpoint}id:${id}`);
+    async read(endpoint: string, id: string): Promise<APIResponse> {
+        return this.request(Methods.GET, `${endpoint}${id}`);
     }
 
-    async update(id: string, model: any): Promise<APIResponse> {
-        return this.request(Methods.PUT, `${this.endpoint}id:${id}`, model);
+    async update(endpoint: string, id: string, model?: any): Promise<APIResponse> {
+        return this.request(Methods.PUT, `${endpoint}${id}`, model);
     }
 
-    async delete(id: string): Promise<APIResponse> {
-        return this.request(Methods.DELETE, `${this.endpoint}id:${id}`);
+    async delete(endpoint: string, id: string): Promise<APIResponse> {
+        return this.request(Methods.DELETE, `${endpoint}${id}`);
     }
 }

@@ -1,15 +1,13 @@
 import { test as base } from '@playwright/test';
-import {RequestAPI} from "../api/requests/RequestAPI";
 import {CheckedBase} from "../api/requests/CheckedBase";
 
 type PlaywrightFixture = {
-    api: RequestAPI;
+    api: CheckedBase;
 };
 
 export const test = base.extend<PlaywrightFixture>({
     api: async ({ request }, use) => {
-        const apiPage = new RequestAPI(request);
-        //const checkedBase = new CheckedBase(request);
+        const apiPage = new CheckedBase(request);
         await use(apiPage);
     },
 });

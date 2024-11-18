@@ -1,10 +1,8 @@
 import {APIResponse} from "@playwright/test";
-import {Methods} from "../enums/methods";
 
 export interface ICrudInterface {
-    //request<T>(method: Methods, endpoint: string, options?: any): Promise<APIResponse>;
-    create(model: any): Promise<APIResponse>;
-    read(id: string): Promise<APIResponse>;
-    update(id: string, model: any): Promise<APIResponse>;
-    delete(id: string): Promise<APIResponse>;
+    create(endpoint: string, model: any): Promise<APIResponse>;
+    read(endpoint: string, id: string): Promise<APIResponse>;
+    update(endpoint: string, id: string, model: any): Promise<APIResponse>;
+    delete(endpoint: string, id: string): Promise<APIResponse>;
 }
