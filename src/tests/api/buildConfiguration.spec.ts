@@ -1,24 +1,27 @@
 import {expect, test} from "@src/fixtures/api.fixture";
 import {allure} from "allure-playwright";
 import {Endpoints} from "../../api/enums/endpoints";
-
-
-
+import {Spec} from "../../api/spec/SpecificationsApi";
+import {User} from "../../api/models/User";
 
 test.describe('Api test', async () => {
-   test.only('ShowProject', async ({api}) => {
+   test('ShowProject', async ({api}) => {
        await allure.suite('Regression');
        await allure.label('Positive', 'CRUD');
 
-       const response = await api.read(Endpoints.PROJECTS);
+       const response = await api.read(Spec.superAuthSpec(), Endpoints.PROJECTS);
        expect(response.status()).toEqual(200);
    });
 
-   test('Build configuration', async () => {
+   test.only('Build configuration', async ({api}) => {
         await allure.suite('Regression');
         await allure.label('Positive', 'CRUD');
 
         await allure.logStep('Create user');
+        const response = await api.create(Spec.superAuthSpec(), Endpoints.USERS, {
+            data: new User().getUser,
+        });
+
         await allure.logStep('Create project');
         await allure.logStep('Create buildType');
         await allure.logStep('Check buildType => created');
