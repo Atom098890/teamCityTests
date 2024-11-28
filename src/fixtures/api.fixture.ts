@@ -6,8 +6,8 @@ type PlaywrightFixture = {
 };
 
 export const test = base.extend<PlaywrightFixture>({
-    api: async ({ request }, use) => {
-        const apiPage = new CheckedBase(request);
+    api: async ({}, use) => {
+        const apiPage = new CheckedBase();
         await use(apiPage);
     },
 });

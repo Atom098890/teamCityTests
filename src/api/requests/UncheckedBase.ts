@@ -1,15 +1,11 @@
 import {RequestAPI} from "./RequestAPI";
-import {APIRequestContext, APIResponse} from "@playwright/test";
+import {APIResponse} from "@playwright/test";
 import {Methods} from "../enums/methods";
 import {ICrudInterface} from "./crudInterface.interface";
 import {Spec} from "../spec/SpecificationsApi";
 
 export class UncheckedBase extends RequestAPI implements ICrudInterface {
-    constructor(requestApi: APIRequestContext) {
-        super(requestApi);
-    }
-    
-    async create(spec: Spec, endpoint: string, options?: any): Promise<APIResponse> {
+    async create(spec: Spec, endpoint: string, options: any = {}): Promise<APIResponse> {
         return this.request(Methods.POST, spec, endpoint, options);
     }
 

@@ -1,15 +1,15 @@
 import {RequestAPI} from "./RequestAPI";
 import {ICrudInterface} from "./crudInterface.interface";
-import {APIRequestContext, APIResponse, expect} from "@playwright/test";
+import {APIResponse, expect} from "@playwright/test";
 import {UncheckedBase} from "./UncheckedBase";
 import {Spec} from "../spec/SpecificationsApi";
 
 export class CheckedBase extends RequestAPI implements ICrudInterface {
     private uncheckedBase: UncheckedBase;
 
-    constructor(protected readonly requestApi: APIRequestContext) {
-        super(requestApi);
-        this.uncheckedBase = new UncheckedBase(requestApi);
+    constructor() {
+        super();
+        this.uncheckedBase = new UncheckedBase();
     }
 
     async create(spec: Spec, endpoint: string, options?: any): Promise<APIResponse> {

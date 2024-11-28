@@ -1,22 +1,20 @@
-import {APIRequestContext, APIResponse} from "@playwright/test";
+import {APIResponse, request} from "@playwright/test";
 import {Methods} from "../enums/methods";
 import {Spec} from "../spec/SpecificationsApi";
 
 
 export class RequestAPI {
-    constructor(protected readonly requestApi: APIRequestContext) {
-    }
-
-    async request(method: Methods, spec: Spec, endpoint: string, options?: any): Promise<APIResponse> {
+    async request(method: Methods, spec: Spec, endpoint: string, options: object = {}): Promise<APIResponse> {
         try {
-            return this.requestApi[method](
-                `http:/${spec}/` + endpoint,
+            const req = await request.newContext ({ baseURL: `http:/${spec}/`})
+            return req[method](
+                 endpoint,
                 {
                     headers: {
                         Accept: "application/json",
                         'Content-Type': "application/json"
                     },
-                    ...options
+                    data: options
                 }
             );
         } catch (e) {
