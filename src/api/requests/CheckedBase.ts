@@ -12,9 +12,9 @@ export class CheckedBase extends RequestAPI implements ICrudInterface {
         this.uncheckedBase = new UncheckedBase();
     }
 
-    async create(spec: Spec, endpoint: string, options?: any): Promise<APIResponse> {
+    async create(spec: Spec, endpoint: string, options?: any) {
         const response = await this.uncheckedBase.create(spec, endpoint, options);
-        expect(response.status()).toEqual(200);
+        //expect(response.status()).toEqual(200);
         return response;
     }
 

@@ -16,20 +16,13 @@ export class User {
         this.roles = new Roles(Role.ADMIN).getRole;
     }
 
-    get user(): object {
+    get getUser(): object {
         return {
             username: this.username,
             name: this.name,
             password: this.password,
             email: this.email,
-            roles: {
-                "role": [
-                    {
-                        "roleId": "SYSTEM_ADMIN",
-                        "scope": "g",
-                    }
-                ]
-            }
+            roles: this.roles
         };
     }
 }

@@ -6,11 +6,11 @@ export class Project {
     private locator: string = "_Root";
 
     constructor() {
-        this.id = `test${fakerEN.number.int()}`;
+        this.id = 'test' + fakerEN.number.int();
         this.name = 'projectTest' + fakerEN.internet.username();
     }
 
-    get project(): object {
+    get getProject(): object {
         return {
             parentProject: {
                 locator: this.locator

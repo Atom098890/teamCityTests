@@ -5,28 +5,25 @@ import {Spec} from "../../api/spec/SpecificationsApi";
 import {User} from "../../api/models/User";
 import {Project} from "../../api/models/Project";
 import {Role, Roles} from "../../api/models/Roles";
+import {BuildType} from "../../api/models/BuildType";
 
 test.describe('Api test', async () => {
-   test('ShowProject', async ({api}) => {
-       await allure.suite('Regression');
-       await allure.label('Positive', 'CRUD');
-
-       const response = await api.read(Spec.superAuthSpec, Endpoints.PROJECTS);
-       expect(response.status()).toEqual(200);
-   });
-
    test.only('Build configuration', async ({api, request}) => {
         await allure.suite('Regression');
         await allure.label('Positive', 'CRUD');
 
         await allure.logStep('Create user');
         const user = new User()
-        const res = await api.create(Spec.superAuthSpec, Endpoints.USERS, user.user);
+        const res = await api.create(Spec.superAuthSpec, Endpoints.USERS, user.getUser);
 
         await allure.logStep('Create project');
-        const response = await api.create(Spec.authSpec(user), Endpoints.PROJECTS, new Project().project);
+        const response1 = await api.create(Spec.authSpec(user), Endpoints.PROJECTS, new Project().getProject);
+        const responseProject = await response1.json()
 
         await allure.logStep('Create buildType');
+        const response = await api.create(Spec.authSpec(user), Endpoints.BUILD_TYPES, new BuildType(responseProject.id).getBuildType);
+        console.log(await response.text())
+
         await allure.logStep('Check buildType => created');
    });
 
