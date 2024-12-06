@@ -1,13 +1,14 @@
 import { test as base } from '@playwright/test';
-import {CheckedBase} from "../api/requests/CheckedBase";
+import {Route} from "../api/requests/Route";
 
 type PlaywrightFixture = {
-    api: CheckedBase;
+    api: Route;
 };
 
 export const test = base.extend<PlaywrightFixture>({
     api: async ({}, use) => {
-        const apiPage = new CheckedBase();
+        const apiPage = new Route();
+
         await use(apiPage);
     },
 });
