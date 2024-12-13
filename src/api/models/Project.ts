@@ -1,7 +1,7 @@
 import {fakerEN} from "@faker-js/faker";
 
 export class Project {
-    private id: string;
+    readonly id: string;
     private name: string;
     private locator: string = "_Root";
 

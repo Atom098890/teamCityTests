@@ -1,8 +1,7 @@
 import {getPropertiesConfig} from "../../config/config";
-import {User} from "../models/User";
 
 export class Spec {
-    static authSpec(user: User): string {
+    static authSpec(user): string {
         return `${user.username}:${user.password}@${getPropertiesConfig('host')}`;
     }
 

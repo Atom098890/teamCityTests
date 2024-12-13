@@ -3,7 +3,8 @@
     "baseUrl": ".",
     "experimentalDecorators": true,
     "paths": {
-      "@src/fixtures/*": ["src/fixtures/*"]
+      "@src/fixtures/*": ["src/fixtures/*"],
+      "@src/api/*": ["src/api/*"]
     }
   }
 }

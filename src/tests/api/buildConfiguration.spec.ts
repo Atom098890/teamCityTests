@@ -1,41 +1,38 @@
 import {expect, test} from "@src/fixtures/api.fixture";
 import {allure} from "allure-playwright";
-import {Endpoints} from "../../api/enums/endpoints";
-import {Spec} from "../../api/spec/SpecificationsApi";
-import {User} from "../../api/models/User";
-import {Project} from "../../api/models/Project";
-import {BuildType} from "../../api/models/BuildType";
+import {Endpoints} from "@src/api/enums/endpoints";
+import {Spec} from "@src/api/spec/SpecificationsApi";
+import {User} from "@src/api/models/User";
+import {Project} from "@src/api/models/Project";
+import {BuildType} from "@src/api/models/BuildType";
+import {testData} from "@src/api/models/TestData";
 
 test.describe('Api test', async () => {
     test.beforeEach(async () => {
         await allure.suite('Regression');
     });
 
-   test('Build configuration', async ({api, request}) => {
+   test.only('Build configuration', async ({api, request}) => {
+        const data = testData.generateData();
         await allure.label('Positive', 'CRUD');
-
         await allure.logStep('Create user');
-        const user = new User();
-        await api.checked.create(Spec.superAuthSpec, Endpoints.USERS, user.getUser);
+        await api.checked.create(Spec.superAuthSpec, Endpoints.USERS, data.getUser);
 
         await allure.logStep('Create project');
-        const project = new Project().getProject;
-        const resProject = await api.checked.create(Spec.authSpec(user), Endpoints.PROJECTS, project);
-        const { id: projectId } = await resProject.json();
+        await api.checked.create(Spec.authSpec(data.getUser), Endpoints.PROJECTS, data.getProject);
 
         await allure.logStep('Create buildType');
-        const buildType = new BuildType(projectId).getBuildType;
-        const resBuildType = await api.checked.create(Spec.authSpec(user), Endpoints.BUILD_TYPES, buildType);
+        const resBuildType = await api.checked.create(Spec.authSpec(data.getUser), Endpoints.BUILD_TYPES, data.getBuildType);
         const { id: buildTypeId, name: buildName } = await resBuildType.json();
 
-        const resCreatedBuildType = await api.checked.read(Spec.authSpec(user), Endpoints.BUILD_TYPES, `id:${buildTypeId}`);
+        const resCreatedBuildType = await api.checked.read(Spec.authSpec(data.getUser), Endpoints.BUILD_TYPES, `id:${buildTypeId}`);
         const { name: createdBuildName } = await resCreatedBuildType.json();
 
         await allure.logStep('Check buildType => created');
         expect(buildName).toContain(createdBuildName);
    });
 
-    test.only('Build configuration with the same Id', async ({api}) => {
+    test('Build configuration with the same Id', async ({api}) => {
         await allure.label('Negative', 'CRUD');
 
         await allure.logStep('Create user');
