@@ -1,13 +1,11 @@
-import {fakerEN} from "@faker-js/faker";
-
 export class Project {
     readonly id: string;
     private name: string;
     private locator: string = "_Root";
 
-    constructor() {
-        this.id = 'test' + fakerEN.number.int();
-        this.name = 'projectTest' + fakerEN.internet.username();
+    constructor(id: string, name: string) {
+        this.id = id;
+        this.name = name;
     }
 
     get getProject(): object {

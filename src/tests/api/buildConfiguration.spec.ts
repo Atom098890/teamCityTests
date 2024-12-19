@@ -2,9 +2,6 @@ import {expect, test} from "@src/fixtures/api.fixture";
 import {allure} from "allure-playwright";
 import {Endpoints} from "@src/api/enums/endpoints";
 import {Spec} from "@src/api/spec/SpecificationsApi";
-import {User} from "@src/api/models/User";
-import {Project} from "@src/api/models/Project";
-import {BuildType} from "@src/api/models/BuildType";
 import {testData} from "@src/api/models/TestData";
 
 test.describe('Api test', async () => {
@@ -12,9 +9,10 @@ test.describe('Api test', async () => {
         await allure.suite('Regression');
     });
 
-   test.only('Build configuration', async ({api, request}) => {
+   test('Build configuration', async ({api, request}) => {
         const data = testData.generateData();
         await allure.label('Positive', 'CRUD');
+
         await allure.logStep('Create user');
         await api.checked.create(Spec.superAuthSpec, Endpoints.USERS, data.getUser);
 
@@ -33,23 +31,20 @@ test.describe('Api test', async () => {
    });
 
     test('Build configuration with the same Id', async ({api}) => {
+        const data = testData.generateData();
         await allure.label('Negative', 'CRUD');
 
         await allure.logStep('Create user');
-        const user = new User();
-        await api.checked.create(Spec.superAuthSpec, Endpoints.USERS, user.getUser);
+        await api.checked.create(Spec.superAuthSpec, Endpoints.USERS, data.getUser);
 
         await allure.logStep('Create project');
-        const project = new Project().getProject;
-        const resProject = await api.checked.create(Spec.authSpec(user), Endpoints.PROJECTS, project);
-        const { id: projectId } = await resProject.json();
+        await api.checked.create(Spec.authSpec(data.getUser), Endpoints.PROJECTS, data.getProject);
 
         await allure.logStep('Create buildTypeOne');
-        const buildType = new BuildType(projectId).getBuildType;
-        await api.checked.create(Spec.authSpec(user), Endpoints.BUILD_TYPES, buildType);
+        await api.checked.create(Spec.authSpec(data.getUser), Endpoints.BUILD_TYPES, data.getBuildType);
 
         await allure.logStep('Try to create buildTypeTwo with id as buildTypeOne');
-        const response = await api.unchecked.create(Spec.authSpec(user), Endpoints.BUILD_TYPES, buildType);
+        const response = await api.unchecked.create(Spec.authSpec(data.getUser), Endpoints.BUILD_TYPES, data.getBuildType);
 
         await allure.logStep('Check buildType => Not created')
         expect(response.status()).toEqual(400);

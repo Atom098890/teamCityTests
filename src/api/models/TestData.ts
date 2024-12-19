@@ -1,6 +1,9 @@
 import {Project} from "./Project";
 import {User} from "./User";
 import {BuildType} from "./BuildType";
+import {fakerEN} from "@faker-js/faker";
+import {Role, Roles} from "@src/api/models/Roles";
+import {Steps} from "@src/api/models/Steps";
 
 interface GeneratedData {
     getUser: object;
@@ -14,9 +17,24 @@ class TestData {
     private buildType: BuildType;
 
     constructor() {
-        this.project = new Project();
-        this.user = new User();
-        this.buildType = new BuildType(this.project.id);
+        this.project = new Project(
+            'test' + fakerEN.number.int(),
+            'projectTest' + fakerEN.internet.username()
+        );
+        this.user = new User(
+            fakerEN.internet.username(),
+            fakerEN.internet.username(),
+            fakerEN.internet.password(),
+            fakerEN.internet.email(),
+            new Roles(Role.ADMIN)
+        );
+        this.buildType = new BuildType(
+            this.project.id,
+            'buildId' + fakerEN.number.int(),
+            'templateId' + fakerEN.number.int(),
+            'buildName' + fakerEN.internet.username(),
+            new Steps()
+        );
     }
 
     generateData(): GeneratedData {

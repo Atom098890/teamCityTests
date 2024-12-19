@@ -1,4 +1,3 @@
-import {fakerEN} from "@faker-js/faker";
 import {Steps} from "./Steps";
 
 export class BuildType {
@@ -8,18 +7,18 @@ export class BuildType {
     private projectId: string;
     private steps: object;
 
-    constructor(projectId: string) {
+    constructor(projectId: string, id: string, templateId: string, name: string, steps: Steps) {
         this.projectId = projectId;
-        this.id = 'buildId' + fakerEN.number.int();
-        this.templateId = 'templateId' + fakerEN.number.int();
-        this.name = 'buildName' + fakerEN.internet.username();
-        this.steps = new Steps().getSteps;
+        this.id = id;
+        this.templateId = templateId;
+        this.name = name;
+        this.steps = steps.getSteps;
     }
 
     get getBuildType() {
         return {
             "id": this.id,
-            "name": "Print hello world",
+            "name": this.name,
             "project": {
                 "id": this.projectId
             },

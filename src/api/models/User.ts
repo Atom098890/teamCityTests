@@ -1,5 +1,4 @@
-import {fakerEN} from "@faker-js/faker";
-import {Role, Roles} from "./Roles";
+import {Roles} from "./Roles";
 
 export class User {
     readonly name: string;
@@ -8,12 +7,12 @@ export class User {
     readonly email: string;
     readonly roles: object;
 
-    constructor() {
-        this.username = fakerEN.internet.username();
-        this.name = fakerEN.internet.username();
-        this.password = fakerEN.internet.password();
-        this.email = fakerEN.internet.email();
-        this.roles = new Roles(Role.ADMIN).getRole;
+    constructor(username: string, name: string, password: string, email: string, roles: Roles) {
+        this.username = username;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.roles = roles.getRole;
     }
 
     get getUser(): object {
