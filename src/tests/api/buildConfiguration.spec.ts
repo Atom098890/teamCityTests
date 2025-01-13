@@ -3,10 +3,15 @@ import {allure} from "allure-playwright";
 import {Endpoints} from "@src/api/enums/endpoints";
 import {Spec} from "@src/api/spec/SpecificationsApi";
 import {testData} from "@src/api/models/TestData";
+import {TestDataStorage} from "@src/api/models/TestDataStorage";
 
 test.describe('Api test', async () => {
     test.beforeEach(async () => {
         await allure.suite('Regression');
+    });
+
+    test.afterEach(async () => {
+       TestDataStorage.getStorage().deleteEntities();
     });
 
    test('Build configuration', async ({api, request}) => {

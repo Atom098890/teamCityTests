@@ -32,11 +32,14 @@ export class TestDataStorage {
         this.entitiesMap.get(endpoint).add(value);
     }
 
-    public deleteEntity() {
+    public deleteEntities() {
         this.entitiesMap.forEach((entity, endpoint) => {
             entity.forEach((value) => {
+                console.log("Value", value)
                new UncheckedBase().delete(Spec.superAuthSpec, endpoint, value)
             });
         });
+
+        this.entitiesMap.clear();
     }
 }
