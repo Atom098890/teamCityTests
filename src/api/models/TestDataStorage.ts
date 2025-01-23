@@ -34,9 +34,9 @@ export class TestDataStorage {
 
     public deleteEntities() {
         this.entitiesMap.forEach((entity, endpoint) => {
-            entity.forEach((value) => {
+            entity.forEach(async (value) => {
                 console.log("Value", value)
-               new UncheckedBase().delete(Spec.superAuthSpec, endpoint, value)
+               await new UncheckedBase().delete(Spec.superAuthSpec, endpoint, value)
             });
         });
 
