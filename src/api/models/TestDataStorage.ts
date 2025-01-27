@@ -32,10 +32,18 @@ export class TestDataStorage {
         this.entitiesMap.get(endpoint).add(value);
     }
 
-    public deleteEntities() {
+    public addCreatedEntity() {
+
+    }
+
+    public async deleteEntities() {
         this.entitiesMap.forEach((entity, endpoint) => {
             entity.forEach(async (value) => {
-               await new UncheckedBase().delete(Spec.superAuthSpec, endpoint, value)
+                if (value['username']) {
+                    await new UncheckedBase().delete(Spec.superAuthSpec, endpoint, `username:${value['username']}`);
+                } else {
+                    await new UncheckedBase().delete(Spec.superAuthSpec, endpoint, `${value['id']}`);
+                }
             });
         });
 

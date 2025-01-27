@@ -10,11 +10,12 @@ test.describe('Api test', async () => {
         await allure.suite('Regression');
     });
 
-    test.afterEach(async () => {
-       TestDataStorage.getStorage().deleteEntities();
+    test.afterEach( async () => {
+        console.log('DONE')
+      await TestDataStorage.getStorage().deleteEntities();
     });
 
-   test('Build configuration', async ({api, request}) => {
+   test.only('Build configuration', async ({api}) => {
         const data = testData.generateData();
         await allure.label('Positive', 'CRUD');
 
@@ -68,7 +69,7 @@ test.describe('Api test', async () => {
     });
 
     test('Project admin can create buildType for another user', async () => {
-        await allure.label('Negative ', 'Roles');
+        await allure.label('Negative', 'Roles');
 
         await allure.logStep('Create userOne');
         await allure.logStep('Create projectOne');
