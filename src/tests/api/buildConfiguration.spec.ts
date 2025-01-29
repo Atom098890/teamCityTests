@@ -2,10 +2,11 @@ import {expect, test} from "@src/fixtures/api.fixture";
 import {allure} from "allure-playwright";
 import {Endpoints} from "@src/api/enums/endpoints";
 import {Spec} from "@src/api/spec/SpecificationsApi";
-import {testData} from "@src/api/models/TestData";
+import {TestData} from "@src/api/models/TestData";
 import {TestDataStorage} from "@src/api/models/TestDataStorage";
+import {Role} from "@src/api/models/Roles";
 
-test.describe('Api test', async () => {
+test.describe('Api tests', async () => {
     test.beforeEach(async () => {
         await allure.suite('Regression');
     });
@@ -16,7 +17,7 @@ test.describe('Api test', async () => {
     });
 
    test.only('Build configuration', async ({api}) => {
-        const data = testData.generateData();
+        const data = TestData.generate(Role.ADMIN);
         await allure.label('Positive', 'CRUD');
 
         await allure.logStep('Create user');
@@ -37,7 +38,7 @@ test.describe('Api test', async () => {
    });
 
     test('Build configuration with the same Id', async ({api}) => {
-        const data = testData.generateData();
+        const data = TestData.generate(Role.ADMIN);
         await allure.label('Negative', 'CRUD');
 
         await allure.logStep('Create user');

@@ -4,14 +4,14 @@ import {Spec} from "@src/api/spec/SpecificationsApi";
 
 export class TestDataStorage {
     private static testDataStorage: TestDataStorage;
-    private entitiesMap: Map<Endpoints, Set<string>>
+    private entitiesMap: Map<Endpoints, Set<object>>
 
     private constructor() {
-        this.entitiesMap = new Map<Endpoints, Set<string>>();
+        this.entitiesMap = new Map<Endpoints, Set<object>>();
     }
 
     public static getStorage(): TestDataStorage {
-        if(this.testDataStorage === undefined) {
+        if(!TestDataStorage.testDataStorage) {
             this.testDataStorage = new TestDataStorage();
         }
         return this.testDataStorage;
@@ -24,25 +24,21 @@ export class TestDataStorage {
     }
     */
 
-    public addEntity(endpoint: Endpoints, value: string) {
+    public addEntity(endpoint: Endpoints, option: object) {
         if(!this.entitiesMap.has(endpoint)) {
-            this.entitiesMap.set(endpoint, new Set<string>());
+            this.entitiesMap.set(endpoint, new Set<object>());
         }
 
-        this.entitiesMap.get(endpoint).add(value);
-    }
-
-    public addCreatedEntity() {
-
+        this.entitiesMap.get(endpoint).add(option);
     }
 
     public async deleteEntities() {
         this.entitiesMap.forEach((entity, endpoint) => {
-            entity.forEach(async (value) => {
+            entity.forEach( (value) => {
                 if (value['username']) {
-                    await new UncheckedBase().delete(Spec.superAuthSpec, endpoint, `username:${value['username']}`);
+                    new UncheckedBase().delete(Spec.superAuthSpec, endpoint, `username:${value['username']}`);
                 } else {
-                    await new UncheckedBase().delete(Spec.superAuthSpec, endpoint, `${value['id']}`);
+                    new UncheckedBase().delete(Spec.superAuthSpec, endpoint, `${value['id']}`);
                 }
             });
         });

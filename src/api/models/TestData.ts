@@ -11,39 +11,31 @@ interface GeneratedData {
     getBuildType: object;
 }
 
-class TestData {
-    private project: Project;
-    private user: User;
-    private buildType: BuildType;
-
-    constructor() {
-        this.project = new Project(
+export class TestData {
+    static generate(role: Role): GeneratedData {
+        const project = new Project(
             'test' + fakerEN.number.int(),
             'projectTest' + fakerEN.internet.username()
         );
-        this.user = new User(
+        const user = new User(
             fakerEN.internet.username(),
             fakerEN.internet.username(),
             fakerEN.internet.password(),
             fakerEN.internet.email(),
-            new Roles(Role.ADMIN)
+            new Roles(role)
         );
-        this.buildType = new BuildType(
-            this.project.id,
+        const buildType = new BuildType(
+            project.id,
             'buildId' + fakerEN.number.int(),
             'templateId' + fakerEN.number.int(),
             'buildName' + fakerEN.internet.username(),
             new Steps()
         );
-    }
 
-    generateData(): GeneratedData {
         return {
-            getUser: this.user.getUser,
-            getProject: this.project.getProject,
-            getBuildType: this.buildType.getBuildType
-        }
+            getUser: user.getUser,
+            getProject: project.getProject,
+            getBuildType: buildType.getBuildType
+        };
     }
 }
-
-export const testData = new TestData();

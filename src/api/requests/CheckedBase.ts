@@ -14,7 +14,7 @@ export class CheckedBase extends RequestAPI implements ICrudInterface {
         this.uncheckedBase = new UncheckedBase();
     }
 
-    async create(spec: Spec, endpoint: Endpoints, options: any) {
+    async create(spec: Spec, endpoint: Endpoints, options: object) {
             const response = await this.uncheckedBase.create(spec, endpoint, options);
             expect(response.status()).toEqual(200);
             TestDataStorage.getStorage().addEntity(endpoint, options);
