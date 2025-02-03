@@ -12,11 +12,10 @@ test.describe('Api tests', async () => {
     });
 
     test.afterEach( async () => {
-        console.log('DONE')
       await TestDataStorage.getStorage().deleteEntities();
     });
 
-   test.only('Build configuration', async ({api}) => {
+   test('Build configuration', async ({api}) => {
         const data = TestData.generate(Role.ADMIN);
         await allure.label('Positive', 'CRUD');
 

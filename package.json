@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test-api": "playwright test --workers 3 --config=api.config.ts --project=api"
+    "test-api": "playwright test --workers 3 --config=api.config.ts --project=api",
+    "test-ui": "playwright test --config=playwright.config.ts --project=chromium"
   },
   "keywords": [],
   "author": "doroshenko <doroshenko@tutu.tech>",

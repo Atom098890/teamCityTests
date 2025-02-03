@@ -1,5 +1,13 @@
 import {Roles} from "./Roles";
 
+export type TUser = {
+    username: string,
+    name: string,
+    password: string,
+    email: string,
+    roles: object,
+}
+
 export class User {
     readonly name: string;
     readonly username: string;
@@ -15,7 +23,7 @@ export class User {
         this.roles = roles.getRole;
     }
 
-    get getUser(): object {
+    get getUser(): TUser {
         return {
             username: this.username,
             name: this.name,

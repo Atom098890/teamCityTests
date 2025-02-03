@@ -1,12 +1,12 @@
 import {Project} from "./Project";
-import {User} from "./User";
+import {TUser, User} from "./User";
 import {BuildType} from "./BuildType";
 import {fakerEN} from "@faker-js/faker";
 import {Role, Roles} from "@src/api/models/Roles";
 import {Steps} from "@src/api/models/Steps";
 
 interface GeneratedData {
-    getUser: object;
+    getUser: TUser;
     getProject: object;
     getBuildType: object;
 }

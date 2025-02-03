@@ -1,10 +1,13 @@
 import {Page} from "@playwright/test";
 
-export class BasePage {
-    constructor(public readonly page: Page) {
+export abstract class BasePage {
+    protected constructor(public readonly page: Page) {
     }
 
-    async open(endpoint: string) {
-        await this.page.goto(endpoint);
+    async open(endpoint: string = '') {
+        const path = this.getPath(endpoint);
+        await this.page.goto(`${path}`);
     }
+
+    abstract getPath(path?: string): string;
 }
