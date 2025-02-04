@@ -1,5 +1,14 @@
 import {Steps} from "./Steps";
 
+export type TBuildType = {
+    id: string,
+    name: string,
+    project: {
+        id: string
+    },
+    steps: object
+}
+
 export class BuildType {
     private id: string;
     private templateId: string;
@@ -15,14 +24,14 @@ export class BuildType {
         this.steps = steps.getSteps;
     }
 
-    get getBuildType() {
+    get getBuildType(): TBuildType {
         return {
-            "id": this.id,
-            "name": this.name,
-            "project": {
-                "id": this.projectId
+            id: this.id,
+            name: this.name,
+            project: {
+                id: this.projectId
             },
-            "steps": this.steps
+            steps: this.steps
         }
     }
 }

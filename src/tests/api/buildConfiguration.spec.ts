@@ -1,4 +1,4 @@
-import {expect, test} from "@src/fixtures/api.fixture";
+import {expect, test} from "@src/fixtures/fixtures";
 import {allure} from "allure-playwright";
 import {Endpoints} from "@src/api/enums/endpoints";
 import {Spec} from "@src/api/spec/SpecificationsApi";

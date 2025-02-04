@@ -4,7 +4,7 @@ import {Spec} from "../spec/SpecificationsApi";
 
 
 export class RequestAPI {
-    async request(method: Methods, spec: Spec, endpoint: string, options: object = {}): Promise<APIResponse> {
+    protected async request(method: Methods, spec: Spec, endpoint: string, options: object = {}): Promise<APIResponse> {
         try {
             const req = await request.newContext ({ baseURL: `http:/${spec}/`})
             return req[method](

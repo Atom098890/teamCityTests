@@ -1,3 +1,12 @@
+export type TProject = {
+    parentProject: {
+        locator: string ,
+    },
+    name: string,
+    id: string,
+    copyAllAssociatedSettings: boolean,
+}
+
 export class Project {
     readonly id: string;
     private name: string;
@@ -8,7 +17,7 @@ export class Project {
         this.name = name;
     }
 
-    get getProject(): object {
+    get getProject(): TProject {
         return {
             parentProject: {
                 locator: this.locator

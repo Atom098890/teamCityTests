@@ -1,21 +1,21 @@
-import {Project} from "./Project";
+import {Project, TProject} from "./Project";
 import {TUser, User} from "./User";
-import {BuildType} from "./BuildType";
+import {BuildType, TBuildType} from "./BuildType";
 import {fakerEN} from "@faker-js/faker";
 import {Role, Roles} from "@src/api/models/Roles";
 import {Steps} from "@src/api/models/Steps";
 
 interface GeneratedData {
     getUser: TUser;
-    getProject: object;
-    getBuildType: object;
+    getProject: TProject;
+    getBuildType: TBuildType;
 }
 
 export class TestData {
     static generate(role: Role): GeneratedData {
         const project = new Project(
             'test' + fakerEN.number.int(),
-            'projectTest' + fakerEN.internet.username()
+            'projectTest' + fakerEN.number.int()
         );
         const user = new User(
             fakerEN.internet.username(),
@@ -28,7 +28,7 @@ export class TestData {
             project.id,
             'buildId' + fakerEN.number.int(),
             'templateId' + fakerEN.number.int(),
-            'buildName' + fakerEN.internet.username(),
+            'buildName' + fakerEN.number.int(),
             new Steps()
         );
 
