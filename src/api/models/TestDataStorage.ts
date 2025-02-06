@@ -2,6 +2,31 @@ import {Endpoints} from "@src/api/enums/endpoints";
 import {UncheckedBase} from "@src/api/requests/UncheckedBase";
 import {Spec} from "@src/api/spec/SpecificationsApi";
 
+type TProject = {
+    id: string;
+    name: string;
+    description?: string;
+    href: string;
+    webUrl: string;
+};
+
+type TProjectsResponse = {
+    project: TProject[];
+};
+
+export type TUser = {
+    username: string;
+    name: string;
+    id: number;
+    href: string;
+};
+
+export type TUsersResponse = {
+    user: TUser[];
+};
+
+
+
 export class TestDataStorage {
     private static testDataStorage: TestDataStorage;
     private entitiesMap: Map<Endpoints, Set<object>>
@@ -45,4 +70,28 @@ export class TestDataStorage {
 
         this.entitiesMap.clear();
     }
+
+    public async deleteAllEntities() {
+        try {
+            const api = new UncheckedBase();
+
+            const resProjects = await api.read(Spec.superAuthSpec, Endpoints.PROJECTS, '');
+            const projects: TProjectsResponse = await resProjects.json();
+
+            await Promise.all(
+                projects.project.map(p => api.delete(Spec.superAuthSpec, Endpoints.PROJECTS, p.id))
+            );
+
+            const resUsers = await api.read(Spec.superAuthSpec, Endpoints.USERS, '');
+            const users: TUsersResponse = await resUsers.json();
+
+            await Promise.all(
+                users.user.map(u => api.delete(Spec.superAuthSpec, Endpoints.USERS, `username:${u.username}`))
+            );
+
+        } catch (error) {
+            throw new Error(`Error method deleteAll => ${error.message}`);
+        }
+    }
+
 }

@@ -20,7 +20,7 @@ test.describe('UI tests. Project', async () => {
     });
 
     test.afterEach(async () => {
-        await TestDataStorage.getStorage().deleteEntities();
+        await TestDataStorage.getStorage().deleteAllEntities();
     });
 
     test.only('User creates project', async ({page, login, api }) => {
