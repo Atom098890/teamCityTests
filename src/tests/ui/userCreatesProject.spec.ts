@@ -23,7 +23,7 @@ test.describe('UI tests. Project', async () => {
         await TestDataStorage.getStorage().deleteAllEntities();
     });
 
-    test.only('User creates project', async ({page, login, api }) => {
+    test.only('User creates project', async ({login, api }) => {
         const data = TestData.generate(Role.ADMIN);
         await allure.logStep('Login');
         await login(data.getUser);
