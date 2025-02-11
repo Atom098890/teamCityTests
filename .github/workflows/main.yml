@@ -1,0 +1,26 @@
+name: TeamCity deployment
+
+on: push
+
+jobs:
+  #Backend and deploy on stage
+  backend:
+    uses: ./.github/workflows/backend-stage.yml
+
+  #Frontend and deploy on stage
+  frontend:
+    uses: ./.github/workflows/frontend-stage.yml
+
+  #Running api tests
+  api-test:
+    needs: [ backend, frontend ]
+    uses: ./.github/workflows/automation.yml
+    with:
+      package: api
+
+  #Running ui tests
+  ui-test:
+    needs: [ backend, frontend ]
+    uses: ./.github/workflows/automation.yml
+    with:
+      package: chromium

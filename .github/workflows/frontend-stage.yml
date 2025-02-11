@@ -1,0 +1,19 @@
+name: Deploy frontend
+
+on: workflow_call
+
+#it is just example
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build frontend
+        run: echo run build, start linter, start unit tests, create and push new docker image
+
+  deploy-stage:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy frontend to stage
+        run: echo Deploy
