@@ -10,13 +10,16 @@ on:
 
 jobs:
   run-tests:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
@@ -25,13 +28,14 @@ jobs:
         run: |
           echo "PWD: $(pwd)"
           ls -la
+          cat package.json
 
       - name: TeamCity Setup
         uses: ./.github/actions/teamcity-setup
 
       - name: Start setup test
         shell: bash
-        run: npx playwright test tests/setup/setupTest.spec.ts --project=chromium
+        run: npx playwright test -g "Setup settings"
 
       - name: Run tests
         continue-on-error: false
