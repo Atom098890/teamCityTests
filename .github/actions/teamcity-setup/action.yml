@@ -32,11 +32,11 @@ runs:
 
     - name: Install Playwright Browsers
       shell: bash
-      run: npx playwright install
+      run: npm exec playwright install --with-deps
 
     - name: Start setup test
       shell: bash
-      run: npx playwright test tests/setup/setupTest.spec.ts
+      run: npx playwright test tests/setup/setupTest.spec.ts --project=chromium
         
     - name: Setup user token
       shell: bash
