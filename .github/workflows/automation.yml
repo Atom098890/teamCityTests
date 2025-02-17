@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
 
       - name: Install dependencies
         run: npm ci
@@ -21,15 +22,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install chromium
 
-      - name: Check working directory and node_modules
-        run: |
-          echo "PWD: $(pwd)"
-          ls -la
-          cat package.json
-
-      - name: TeamCity Setup
-        uses: ./.github/actions/teamcity-setup
-
       - name: Run tests
         continue-on-error: false
         run: npx playwright test --config=api.config.ts --project=${{ inputs.package }}
+
+      - name: TeamCity Setup
+        uses: ./.github/actions/teamcity-setup
