@@ -9,11 +9,11 @@
   "keywords": [],
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.48.0",
     "@types/node": "^22.7.5",
     "allure-playwright": "^2.14.1"
   },
   "dependencies": {
+    "@playwright/test": "^1.48.0",
     "@faker-js/faker": "^9.2.0",
     "dotenv": "^16.4.5"
   }
