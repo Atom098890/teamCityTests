@@ -1,5 +1,35 @@
-name: null
-author: doroshenko
-description: null
+name: TeamCity Setup
+
 runs:
-  using:
+  using: composite
+  steps:
+    - name: Install ifconfig
+      shell: bash
+      run: sudo apt-get update && sudo apt-get install -y net-tools
+
+    - name: Set up host ip variable
+      shell: bash
+      run: |
+        echo "BASE_URL=$(ifconfig | grep -E "([0-9]{1,3}\.){3}[0-9]{1,3}" | grep -v 127.0.0.1 | awk '{ print $2 }' | cut -f2 -d: | head -n1)" >> $GITHUB_ENV
+
+    - name: Set up BASE_URL to env
+      shell: bash
+      run: echo BASE_URL=$BASE_URL:8111 >> .env
+
+    - name: Run TeamCity Server
+      shell: bash
+      run: |
+        docker run -u 0 -d --name teamcity-server  \
+        -v $(pwd)/tmp/teamcity_server/datadir:/data/teamcity_server/datadir \
+        -v $(pwd)/tmp/teamcity_server/logs:/opt/teamcity/logs  \
+        -p 8111:8111 \
+        jetbrains/teamcity-server:2023.11.1
+        
+    - name: Setup user token
+      shell: bash
+      run: |
+        echo "TOKEN=$(docker logs teamcity-server | grep 'Super user authentication token' | tail -n 1 | awk '{print $6}')" >> $GITHUB_ENV
+
+    - name: Set up superUserToken .env
+      shell: bash
+      run: echo "TOKEN=$TOKEN" >> .env

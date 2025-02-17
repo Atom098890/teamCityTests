@@ -1,5 +1,5 @@
 import {BasePage} from "../BasePage";
-import {expect, Locator, Page} from "@playwright/test";
+import {Locator, Page} from "@playwright/test";
 import {TUser} from "@src/api/models/User";
 
 export class LoginPage extends BasePage {

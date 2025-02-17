@@ -3,10 +3,10 @@ import {TUser} from "@src/api/models/User";
 
 export class Spec {
     static authSpec(user: TUser): string {
-        return `${user.username}:${user.password}@${getPropertiesConfig('HOST')}`;
+        return `${user.username}:${user.password}@${getPropertiesConfig('BASE_URL')}`;
     }
 
     static get superAuthSpec(): string {
-        return `:${getPropertiesConfig('TOKEN')}@${getPropertiesConfig('HOST')}/httpAuth`
+        return `:${getPropertiesConfig('TOKEN')}@${getPropertiesConfig('BASE_URL')}/httpAuth`;
     }
 }
