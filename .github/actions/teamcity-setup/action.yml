@@ -24,7 +24,9 @@ runs:
         -v $(pwd)/tmp/teamcity_server/logs:/opt/teamcity/logs  \
         -p 8111:8111 \
         jetbrains/teamcity-server:2023.11.1
-        
+
+    - name: Get project
+      uses: actions/checkout@v4
 
     - name: Install dependencies
       shell: bash
@@ -32,7 +34,7 @@ runs:
 
     - name: Install Playwright Browsers
       shell: bash
-      run: npm exec playwright install --with-deps
+      run: npx playwright install
 
     - name: Start setup test
       shell: bash
