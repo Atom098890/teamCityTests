@@ -14,19 +14,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: TeamCity Setup
-        uses: ./.github/actions/teamcity-setup
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright Browsers
+        run: npx playwright install
 
       - name: Check working directory and node_modules
         run: |
           echo "PWD: $(pwd)"
           ls -la node_modules/@playwright/test
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Install Playwright Browsers
-        run: npx playwright install
+      - name: TeamCity Setup
+        uses: ./.github/actions/teamcity-setup
 
       - name: Start setup test
         shell: bash
