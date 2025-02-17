@@ -2,13 +2,11 @@
   "name": "apitestonpl",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test-api": "playwright test --config=api.config.ts --project=api",
     "test-ui": "playwright test --config=playwright.config.ts --project=chromium"
   },
   "keywords": [],
-  "author": "doroshenko <doroshenko@tutu.tech>",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.48.0",
