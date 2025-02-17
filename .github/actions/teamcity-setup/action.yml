@@ -25,6 +25,19 @@ runs:
         -p 8111:8111 \
         jetbrains/teamcity-server:2023.11.1
         
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      shell: bash
+      run: npx playwright install
+
+    - name: Start setup test
+      shell: bash
+      run: npx playwright test tests/setup/setupTest.spec.ts
+        
     - name: Setup user token
       shell: bash
       run: |
