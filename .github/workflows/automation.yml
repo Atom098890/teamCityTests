@@ -17,6 +17,11 @@ jobs:
       - name: TeamCity Setup
         uses: ./.github/actions/teamcity-setup
 
+      - name: Check working directory and node_modules
+        run: |
+          echo "PWD: $(pwd)"
+          ls -la node_modules/@playwright/test
+
       - name: Install dependencies
         run: npm install
 
