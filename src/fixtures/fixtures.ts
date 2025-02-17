@@ -6,6 +6,7 @@ import { Endpoints } from "@src/api/enums/endpoints";
 import { TUser } from "@src/api/models/User";
 import { BaseApi } from "@src/api/BaseApi";
 import { BrowserContext, Page } from "@playwright/test";
+import {FirstStartPage} from "../ui/setup/FirstStartPage";
 
 type PlaywrightFixture = {
     api: Route;
@@ -30,12 +31,16 @@ export const test = base.extend<PlaywrightFixture>({
 let browserContext: BrowserContext;
 let basePage: Page;
 let baseApi: BaseApi;
+let setup: FirstStartPage;
 
 test.beforeAll(async ({ browser }) => {
     browserContext = await browser.newContext();
     basePage = await browserContext.newPage();
+    setup = new FirstStartPage(basePage);
     baseApi = new BaseApi(basePage);
 
+    await setup.open();
+    await setup.setupStart();
     await baseApi.setUpAuthSettings();
 });
 
