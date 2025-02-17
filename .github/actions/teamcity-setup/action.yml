@@ -24,21 +24,6 @@ runs:
         -v $(pwd)/tmp/teamcity_server/logs:/opt/teamcity/logs  \
         -p 8111:8111 \
         jetbrains/teamcity-server:2023.11.1
-
-    - name: Get project
-      uses: actions/checkout@v4
-
-    - name: Install dependencies
-      shell: bash
-      run: npm ci
-
-    - name: Install Playwright Browsers
-      shell: bash
-      run: npx playwright install
-
-    - name: Start setup test
-      shell: bash
-      run: npx playwright test tests/setup/setupTest.spec.ts --project=chromium
         
     - name: Setup user token
       shell: bash
