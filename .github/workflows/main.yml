@@ -20,7 +20,7 @@ jobs:
 
   #Running ui tests
   ui-test:
-    needs: [ backend, frontend, api ]
+    needs: [ backend, frontend, api-test ]
     uses: ./.github/workflows/automation.yml
     with:
       package: chromium
