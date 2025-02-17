@@ -24,7 +24,9 @@ jobs:
 
       - name: Run tests
         continue-on-error: false
-        run: npx playwright test --config=api.config.ts --project=${{ inputs.package }}
+        run: | 
+          ls -la
+          npx playwright test --config=api.config.ts --project=${{ inputs.package }}
 
       - name: TeamCity Setup
         uses: ./.github/actions/teamcity-setup
