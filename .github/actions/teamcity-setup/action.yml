@@ -27,17 +27,18 @@ runs:
 
     - name: Проверка статуса контейнера
       shell: bash
-      run: docker ps -a
+      run: docker ps
 
-    - name: Глобальный поиск строки с токеном
+    - name: Проверка каталогов логов
       shell: bash
-      run: docker exec teamcity-server grep -r "Super user authentication token" / 2>/dev/null
-
+      run: |
+        docker exec teamcity-server ls -l /opt/teamcity/logs || true
+        docker exec teamcity-server ls -l /data/teamcity_server/logs || true
         
     - name: Setup user token
       shell: bash
       run: |
-        echo "TOKEN=$(docker logs teamcity-server | grep 'Super user authentication token' | tail -n 1 | awk -F': ' '{print $2}' | awk '{print $1}')" >> $GITHUB_ENV
+        run: echo "SUPER_USER_TOKEN=$(docker logs teamcity-server | grep 'Super user authentication token' | tail -n 1 | awk '{print $6}')" >> $GITHUB_ENV
 
     - name: Set up superUserToken .env
       shell: bash
