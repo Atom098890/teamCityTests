@@ -12,6 +12,9 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: TeamCity Setup
         uses: ./.github/actions/teamcity-setup/action.yml
 
