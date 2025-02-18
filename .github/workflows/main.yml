@@ -9,6 +9,7 @@ jobs:
 
   #Frontend and deploy on stage
   frontend:
+    needs: [ backend ]
     uses: ./.github/workflows/frontend-stage.yml
 
   #Running api tests
@@ -20,7 +21,7 @@ jobs:
 
   #Running ui tests
   ui-test:
-    needs: [ backend, frontend, api-test ]
+    needs: [ api-test ]
     uses: ./.github/workflows/automation.yml
     with:
       package: chromium
