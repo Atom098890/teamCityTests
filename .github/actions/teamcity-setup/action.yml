@@ -24,6 +24,10 @@ runs:
         -v $(pwd)/tmp/teamcity_server/logs:/opt/teamcity/logs  \
         -p 8111:8111 \
         jetbrains/teamcity-server:2023.11.1
+
+    - name: Ожидание запуска контейнера
+      shell: bash
+      run: sleep 15
         
     - name: Setup user token
       shell: bash
