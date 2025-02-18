@@ -37,6 +37,7 @@ runs:
       shell: bash
       run: |
         docker exec teamcity-server ls -l /opt/teamcity/logs && echo "true" || echo "false"
+        docker exec teamcity-server cat /opt/teamcity/logs/teamcity-server.log
         
     - name: Setup user token
       shell: bash
