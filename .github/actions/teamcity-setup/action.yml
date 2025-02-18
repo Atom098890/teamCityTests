@@ -25,6 +25,10 @@ runs:
         -p 8111:8111 \
         jetbrains/teamcity-server:2023.11.1
 
+    - name: Подождать 60 секунд (даём TeamCity время на инициализацию)
+      shell: bash
+      run: sleep 60
+
     - name: Проверка статуса контейнера
       shell: bash
       run: docker ps
@@ -32,13 +36,13 @@ runs:
     - name: Проверка каталогов логов
       shell: bash
       run: |
-        docker exec teamcity-server ls -l /opt/teamcity/logs || true
-        docker exec teamcity-server ls -l /data/teamcity_server/logs || true
+        echo docker exec teamcity-server ls -l /opt/teamcity/logs || true
+        echo docker exec teamcity-server ls -l /data/teamcity_server/logs || true
         
     - name: Setup user token
       shell: bash
       run: |
-        run: echo "SUPER_USER_TOKEN=$(docker logs teamcity-server | grep 'Super user authentication token' | tail -n 1 | awk '{print $6}')" >> $GITHUB_ENV
+        run: echo "TOKEN=$(docker logs teamcity-server | grep 'Super user authentication token' | tail -n 1 | awk '{print $6}')" >> $GITHUB_ENV
 
     - name: Set up superUserToken .env
       shell: bash
