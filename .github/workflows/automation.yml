@@ -1,13 +1,44 @@
-name: Run tests
+#name: Run tests
+#
+#on:
+#  workflow_call:
+#    inputs:
+#      package:
+#        description: api | chromium
+#        required: true
+#        type: string
+#
+#jobs:
+#  playwright:
+#    name: 'Playwright Tests'
+#    runs-on: ubuntu-latest
+#    container:
+#      image: mcr.microsoft.com/playwright:v1.50.1-noble
+#      options: --user 1001
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Use Node.js
+#        uses: actions/setup-node@v3
+#
+#      - name: Install dependencies
+#        run: npm ci
+#
+#      - name: Install Playwright Browsers
+#        run: npx playwright install chromium
+#
+#      - name: Run tests
+#        continue-on-error: false
+#        run: |
+#          ls -la
+#          npx playwright test --config=api.config.ts --project=${{ inputs.package }}
+#
+#      - name: TeamCity Setup
+#        uses: ./.github/actions/teamcity-setup
 
+name: Playwright Tests
 on:
-  workflow_call:
-    inputs:
-      package:
-        description: api | chromium
-        required: true
-        type: string
-
+  push:
+    branches: [ main, master ]
 jobs:
   playwright:
     name: 'Playwright Tests'
@@ -17,20 +48,10 @@ jobs:
       options: --user 1001
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
       - name: Install dependencies
         run: npm ci
-
-      - name: Install Playwright Browsers
-        run: npx playwright install chromium
-
-      - name: Run tests
-        continue-on-error: false
-        run: | 
-          ls -la
-          npx playwright test --config=api.config.ts --project=${{ inputs.package }}
-
-      - name: TeamCity Setup
-        uses: ./.github/actions/teamcity-setup
+      - name: Run your tests
+        run: npx playwright test
