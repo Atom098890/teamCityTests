@@ -25,9 +25,9 @@ runs:
         -p 8111:8111 \
         jetbrains/teamcity-server:2023.11.1
 
-    - name: Найти файлы логов внутри контейнера
+    - name: Проверка статуса контейнера
       shell: bash
-      run: docker logs teamcity-server
+      run: docker ps -a
 
     - name: Глобальный поиск строки с токеном
       shell: bash
