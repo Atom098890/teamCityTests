@@ -18,8 +18,8 @@ jobs:
         with:
           node-version: '23.8.0'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Update npm
+        run: npm install -g npm@latest
 
       - name: Install Playwright Browsers
         run: npx playwright install chromium
