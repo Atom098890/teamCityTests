@@ -32,6 +32,11 @@ jobs:
       - name: TeamCity Setup
         uses: ./.github/actions/teamcity-setup
 
+      - name: Show
+        run: |
+          ls -la
+          cat .env
+
       - name: Run tests
         continue-on-error: false
         run: |
