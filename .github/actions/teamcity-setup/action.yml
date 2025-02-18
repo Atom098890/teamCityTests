@@ -25,9 +25,10 @@ runs:
         -p 8111:8111 \
         jetbrains/teamcity-server:2023.11.1
 
-    - name: Ожидание запуска контейнера
+    - name: Найти файлы логов внутри контейнера
       shell: bash
-      run: sleep 15
+      run: docker exec teamcity-server find / -name "*.log" 2>/dev/null
+
         
     - name: Setup user token
       shell: bash
