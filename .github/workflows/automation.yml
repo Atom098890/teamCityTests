@@ -20,20 +20,21 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: Clean npm cache
-        run: npm cache clean --force
+      - name: Install Yarn
+        run: npm install -g yarn
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install --no-lockfile
+
 
       - name: Install Playwright Browsers
-        run: npx playwright install chromium
+        run: yarn playwright install chromium
 
       - name: Run tests
         continue-on-error: false
         run: | 
           ls -la
-          npx playwright test --config=api.config.ts --project=${{ inputs.package }}
+          yarn playwright test --config=api.config.ts --project=${{ inputs.package }}
 
       - name: TeamCity Setup
         uses: ./.github/actions/teamcity-setup
