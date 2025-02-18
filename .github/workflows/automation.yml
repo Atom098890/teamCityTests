@@ -26,12 +26,16 @@ jobs:
       - name: Install dependencies
         run: yarn install --no-lockfile
 
-
       - name: Install Playwright Browsers
         run: yarn playwright install chromium
 
       - name: TeamCity Setup
         uses: ./.github/actions/teamcity-setup
+
+      - name: Run tests
+        continue-on-error: false
+        run: |
+          yarn playwright test -g "Setup settings"
 
       - name: Run tests
         continue-on-error: false
