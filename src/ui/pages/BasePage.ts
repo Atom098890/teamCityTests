@@ -6,6 +6,7 @@ export abstract class BasePage {
 
     async open(path: string = '') {
         const p = this.getPath(path);
+        console.log('PATH: ', p);
         await this.page.goto(p);
     }
 
