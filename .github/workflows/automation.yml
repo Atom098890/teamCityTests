@@ -32,6 +32,10 @@ jobs:
       - name: TeamCity Setup
         uses: ./.github/actions/teamcity-setup
 
+      - name: Check docker
+        run: |
+          docker ps
+
       - name: Show
         run: |
           ls -la
