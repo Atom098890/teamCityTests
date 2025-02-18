@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: TeamCity Setup
-        uses: ./.github/actions/teamcity-setup
+        uses: ./.github/actions/teamcity-setup/action.yml
 
       - name: Run tests
         continue-on-error: false
