@@ -9,8 +9,12 @@ on:
         type: string
 
 jobs:
-  run-tests:
+  playwright:
+    name: 'Playwright Tests'
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.50.1-noble
+      options: --user 1001
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
