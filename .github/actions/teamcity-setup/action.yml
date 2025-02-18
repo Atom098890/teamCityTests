@@ -7,6 +7,26 @@ runs:
       shell: bash
       run: sudo apt-get update && sudo apt-get install -y net-tools
 
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Use Node.js 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+
+    - name: Install Yarn
+      shell: bash
+      run: npm install -g yarn
+
+    - name: Install dependencies
+      shell: bash
+      run: yarn install --no-lockfile
+
+    - name: Install Playwright Browsers
+      shell: bash
+      run: yarn playwright install chromium
+
     - name: Set up host ip variable
       shell: bash
       run: |
@@ -25,19 +45,11 @@ runs:
         -p 8111:8111 \
         jetbrains/teamcity-server:2023.11.1
 
-    - name: Подождать 60 секунд (даём TeamCity время на инициализацию)
-      shell: bash
-      run: sleep 60
-
-    - name: Проверка статуса контейнера
-      shell: bash
-      run: docker ps
-
-    - name: Проверка каталогов логов
+    - name: Run tests
+      continue-on-error: false
       shell: bash
       run: |
-        docker exec teamcity-server ls -l /opt/teamcity/logs && echo "true" || echo "false"
-        docker exec teamcity-server cat /opt/teamcity/logs/teamcity-server.log
+          yarn playwright test -g "Setup settings"
         
     - name: Setup user token
       shell: bash

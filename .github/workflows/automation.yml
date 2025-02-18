@@ -12,42 +12,10 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Use Node.js 18 LTS
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-
-      - name: Install Yarn
-        run: npm install -g yarn
-
-      - name: Install dependencies
-        run: yarn install --no-lockfile
-
-      - name: Install Playwright Browsers
-        run: yarn playwright install chromium
-
       - name: TeamCity Setup
         uses: ./.github/actions/teamcity-setup
-
-      - name: Check docker
-        run: |
-          docker ps
-
-      - name: Show
-        run: |
-          ls -la
-          cat .env
-
-      - name: Run tests
-        continue-on-error: false
-        run: |
-          yarn playwright test -g "Setup settings"
 
       - name: Run tests
         continue-on-error: false
         run: | 
           yarn playwright test --config=api.config.ts --project=${{ inputs.package }}
-
