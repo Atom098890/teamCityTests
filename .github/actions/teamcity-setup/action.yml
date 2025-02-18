@@ -27,7 +27,11 @@ runs:
 
     - name: Найти файлы логов внутри контейнера
       shell: bash
-      run: docker exec teamcity-server find / -name "*.log" 2>/dev/null
+      run: docker logs teamcity-server
+
+    - name: Глобальный поиск строки с токеном
+      shell: bash
+      run: docker exec teamcity-server grep -r "Super user authentication token" / 2>/dev/null
 
         
     - name: Setup user token
