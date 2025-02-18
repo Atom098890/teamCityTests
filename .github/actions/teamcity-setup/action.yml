@@ -28,7 +28,6 @@ runs:
     - name: Setup user token
       shell: bash
       run: |
-        echo docker logs teamcity-server | grep 'Super user authentication token' | tail -n 1
         echo "TOKEN=$(docker logs teamcity-server | grep 'Super user authentication token' | tail -n 1 | awk -F': ' '{print $2}' | awk '{print $1}')" >> $GITHUB_ENV
 
     - name: Set up superUserToken .env
